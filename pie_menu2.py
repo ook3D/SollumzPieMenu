@@ -116,11 +116,8 @@ class PieApplySelectedFlagPreset(Operator):
         
         return {"FINISHED"}
 
-class PieImportXML(Operator):
-    bl_idname = "ook.importxml"
-    bl_label = "Import Codewalker XML"
 
-    def execute(self, context):
+addon_keymaps = []
 
 
 
@@ -131,9 +128,28 @@ def register():
     bpy.utils.register_class(PieAutoConvertMaterial)
     bpy.utils.register_class(PieAddObjAsMloentity)
     bpy.utils.register_class(PieApplySelectedFlagPreset)
-    
+
+
+# Assigns default keybinding
+    wm = bpy.context.window_manager
+    kc = wm.keyconfigs.addon
+    if kc:
+        km = kc.keymaps.new(name='3D View', space_type= 'VIEW_3D')
+        kmi = km.keymap_items.new("wm.call_menu_pie", type= 'V', value= 'PRESS', shift= False)
+        kmi.properties.name = "mesh.mypie"
+
+        addon_keymaps.append((km,kmi))
+
+
     
 def unregister():
+
+# default keybinding
+    for km,kmi in addon_keymaps:
+        km.keymap_items.remove(kmi)
+    addon_keymaps.clear()
+
+
     bpy.utils.unregister_class(PieApplySelectedFlagPreset)
     bpy.utils.unregister_class(PieAddObjAsMloentity)
     bpy.utils.unregister_class(PieAutoConvertMaterial)
