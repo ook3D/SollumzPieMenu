@@ -39,8 +39,10 @@ class PieConvertToDrawable(Operator):
         for obj in context.selected_objects:
             if obj.type == "MESH":
                 bpy.ops.sollumz.createdrawable()
+                self.report({'INFO'}, 'Created Sollumz Drawable(s)')
 
-        self.report({'INFO'}, 'Created Sollumz Drawable(s)')
+            else:
+                self.report({'WARNING'}, 'Object type is not a mesh')
                 
         return {"FINISHED"}
 
@@ -57,8 +59,10 @@ class PieAutoConvertMaterial(Operator):
         for obj in context.selected_objects:
             if len(obj.data.materials) > 0:
                 bpy.ops.sollumz.autoconvertmaterial()
+                self.report({'INFO'}, 'Converted to sollumz Material')
+            else:
+                self.report({'WARNING'}, 'Object has no materials')
 
-        self.report({'INFO'}, 'Converted to sollumz Material')
         
 
         return {"FINISHED"}
@@ -111,8 +115,10 @@ class PieApplySelectedFlagPreset(Operator):
         for obj in context.selected_objects:
             if obj.sollum_type == 'sollumz_bound_geometrybvh':
                 bpy.ops.sollumz.load_flag_preset()
+                self.report({'INFO'}, 'Applied selected flag preset')
 
-        self.report({'INFO'}, 'Applied selected flag preset')
+            else:
+                self.report({'WARNING'}, 'Bound GeometryBVH is not selected')
         
         return {"FINISHED"}
 
