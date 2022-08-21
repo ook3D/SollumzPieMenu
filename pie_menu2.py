@@ -13,7 +13,7 @@ bl_info = {
     "author":"ooknumber13",
     "version": (1, 0, 0),
     "description": "Pie menus for Sollumz",
-    "blender": (3, 2, 0),
+    "blender": (2, 93, 0),
     "categeory": "3D view"
 }
 
