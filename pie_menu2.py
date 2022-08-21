@@ -21,15 +21,15 @@ class VIEW3D_MT_PIE_template(Menu):
         layout = self.layout
         
         pie = layout.menu_pie()
-        pie.operator("ook.drawable")
-        pie.operator("ook.autoconvertmats")
-        pie.operator("ook.addobjasmloentity")
-        pie.operator("ook.applyselectedflagpreset")
+        pie.operator("ook.autoconvertmats", text="Convert Material", icon='NODE_MATERIAL')
+        pie.operator("ook.addobjasmloentity", text="Add Objects To Room", icon='OBJECT_DATA')
+        pie.operator("ook.applyselectedflagpreset", text="Apply Flag Preset", icon='ALIGN_TOP')
+        pie.operator ("ook.drawable", text="Create Drawable", icon= 'CUBE')
     
 
 class PieConvertToDrawable(Operator):
     bl_idname = "ook.drawable"
-    bl_label = "Create Sollumz drawable(s) from selected"
+    bl_label = "create drawable"
     
     @classmethod
     def poll(cls, context):
@@ -49,7 +49,7 @@ class PieConvertToDrawable(Operator):
 
 class PieAutoConvertMaterial(Operator):
     bl_idname ="ook.autoconvertmats"
-    bl_label = "Automatically convert material"
+    bl_label = "convert material"
 
     @classmethod
     def poll(cls, context):
@@ -70,7 +70,7 @@ class PieAutoConvertMaterial(Operator):
 
 class PieAddObjAsMloentity(Operator):
     bl_idname ="ook.addobjasmloentity"
-    bl_label = "add selected object(s) to selected room"
+    bl_label = "add objects to room"
 
     @classmethod
     def poll(cls, context):
@@ -89,14 +89,15 @@ class PieAddObjAsMloentity(Operator):
                         if context.scene.ytyps[selectedYtyp].archetypes[selectedArchetype].type == 'sollumz_archetype_mlo':
                             if len(context.scene.ytyps[selectedYtyp].archetypes[selectedArchetype].rooms) > 0:
                                 bpy.ops.sollumz.addobjasmloentity()
+                                self.report({'INFO'}, 'Added selected object(s) to selected room')
                             else:
                                 self.report({'WARNING'}, 'MLO has no Rooms')
                         else:
                             self.report({'WARNING'}, 'Selected Archetype type is incorrect, must be: MLO')
                     else:
                         self.report({'WARNING'}, 'Selected YTYP has no Archetypes')
-
-            self.report({'INFO'}, 'Added selected object(s) to selected room')
+                else:
+                    self.report({'WARNING'}, 'Selected object isnt a mesh')
         else:
             self.report({'WARNING'}, 'No YTYPs found, create and select a YTYP first.')
 
@@ -105,7 +106,7 @@ class PieAddObjAsMloentity(Operator):
 
 class PieApplySelectedFlagPreset(Operator):
     bl_idname ="ook.applyselectedflagpreset"
-    bl_label = "apply selected flag preset"
+    bl_label = "apply flag preset"
 
     @classmethod
     def poll(cls, context):
