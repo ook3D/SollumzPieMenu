@@ -6,9 +6,7 @@ How to install
 
 Download the .ZIP
 
-extract the pie_menu.py file
-
-install pie_menu.py in blender
+install the ZIP folder in blender
 
 enjoy!
 
