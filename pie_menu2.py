@@ -24,7 +24,7 @@ class VIEW3D_MT_PIE_template(Menu):
         pie.operator("ook.autoconvertmats", text="Convert Material", icon='NODE_MATERIAL')
         pie.operator("ook.addobjasmloentity", text="Add Objects To Room", icon='OBJECT_DATA')
         pie.operator("ook.applyselectedflagpreset", text="Apply Flag Preset", icon='ALIGN_TOP')
-        pie.operator ("ook.drawable", text="Create Drawable", icon= 'CUBE')
+        pie.operator("ook.drawable", text="Create Drawable", icon= 'CUBE')
     
 
 class PieConvertToDrawable(Operator):
