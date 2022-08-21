@@ -33,6 +33,7 @@ class VIEW3D_MT_PIE_template(Menu):
         pie.operator("ook.applyselectedflagpreset", text="Apply Flag Preset", icon='ALIGN_TOP')
         pie.operator("ook.drawable", text="Create Drawable", icon= 'CUBE')
         pie.operator("ook.findmissingtextures", text="Find Missing Textures", icon= 'MATERIAL')
+        pie.operator("ook.importxml", text="Import XML", icon= 'DUPLICATE')
     
 
 class PieConvertToDrawable(Operator):
@@ -141,10 +142,15 @@ class PieFindMissingTextures(Operator, ImportHelper):
     filename_ext = ".dds"
 
 
+    @classmethod
+    def poll(cls,context):
+        return context.object is not None
+
+
     def execute(self, context):
         return find_missing_files(self.filepath)
-
-
+        
+        
 
 addon_keymaps = []
 
@@ -178,7 +184,6 @@ def unregister():
         km.keymap_items.remove(kmi)
     addon_keymaps.clear()
     
-
 
     bpy.utils.unregister_class(PieFindMissingTextures)
     bpy.utils.unregister_class(PieApplySelectedFlagPreset)
