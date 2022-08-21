@@ -20,6 +20,7 @@ bl_info = {
 
 class VIEW3D_MT_PIE_template(Menu):
     # label is displayed at the center of the pie menu.
+    
     bl_label = "Operations"
     bl_idname="mesh.mypie"
     
@@ -37,6 +38,7 @@ class VIEW3D_MT_PIE_template(Menu):
     
 
 class PieConvertToDrawable(Operator):
+    """Convert selected object(s) to drawable(s)"""
     bl_idname = "ook.drawable"
     bl_label = "create drawable"
     
@@ -57,6 +59,7 @@ class PieConvertToDrawable(Operator):
 
 
 class PieAutoConvertMaterial(Operator):
+    """Autoconvert materials from selected object(s)"""
     bl_idname ="ook.autoconvertmats"
     bl_label = "convert material"
 
@@ -78,6 +81,7 @@ class PieAutoConvertMaterial(Operator):
 
 
 class PieAddObjAsMloentity(Operator):
+    """Add selected object(s) as MLO Entity to selected room"""
     bl_idname ="ook.addobjasmloentity"
     bl_label = "add objects to room"
 
@@ -114,6 +118,7 @@ class PieAddObjAsMloentity(Operator):
 
 
 class PieApplySelectedFlagPreset(Operator):
+    """Apply selected collision flag preset to selected object(s)"""
     bl_idname ="ook.applyselectedflagpreset"
     bl_label = "apply flag preset"
 
@@ -135,6 +140,7 @@ class PieApplySelectedFlagPreset(Operator):
 
 
 class PieFindMissingTextures(Operator, ImportHelper):
+    """Opens find missing textures dialog"""
     bl_idname ="ook.findmissingtextures"
     bl_label = "Find Missing Textures"
 
@@ -155,15 +161,19 @@ class PieFindMissingTextures(Operator, ImportHelper):
 addon_keymaps = []
 
 
+OokClasses = [
+    VIEW3D_MT_PIE_template, 
+    PieConvertToDrawable, 
+    PieAutoConvertMaterial, 
+    PieAddObjAsMloentity, 
+    PieApplySelectedFlagPreset,
+    PieFindMissingTextures]
+
 
 
 def register():
-    bpy.utils.register_class(VIEW3D_MT_PIE_template)
-    bpy.utils.register_class(PieConvertToDrawable)
-    bpy.utils.register_class(PieAutoConvertMaterial)
-    bpy.utils.register_class(PieAddObjAsMloentity)
-    bpy.utils.register_class(PieApplySelectedFlagPreset)
-    bpy.utils.register_class(PieFindMissingTextures)
+    for cls in OokClasses:
+        bpy.utils.register_class(cls)
 
 # Assigns default keybinding
     wm = bpy.context.window_manager
@@ -185,12 +195,8 @@ def unregister():
     addon_keymaps.clear()
     
 
-    bpy.utils.unregister_class(PieFindMissingTextures)
-    bpy.utils.unregister_class(PieApplySelectedFlagPreset)
-    bpy.utils.unregister_class(PieAddObjAsMloentity)
-    bpy.utils.unregister_class(PieAutoConvertMaterial)
-    bpy.utils.unregister_class(PieConvertToDrawable)
-    bpy.utils.unregister_class(VIEW3D_MT_PIE_template)
+    for cls in reversed(OokClasses):
+        bpy.utils.unregister_class(cls)
 
 
 
