@@ -13,3 +13,5 @@ install pie_menu.py in blender
 enjoy!
 
 default keybind is V
+
+Special thanks to MrVicho13 and fdmtech for helping me immensely by contributing!
