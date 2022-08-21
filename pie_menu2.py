@@ -1,10 +1,17 @@
 import bpy
 from bpy.types import Menu, Operator
+from bpy_extras.io_utils import ImportHelper
+
+
+def find_missing_files(filepath):
+    bpy.ops.file.find_missing_files(directory=filepath)
+
+    return {'FINISHED'}
 
 bl_info = {
     "name": "Sollumz Pie Menus",
     "author":"ooknumber13",
-    "version": (0, 0, 0, 1),
+    "version": (1, 0, 0),
     "description": "Pie menus for Sollumz",
     "blender": (3, 2, 0),
     "categeory": "3D view"
@@ -25,6 +32,7 @@ class VIEW3D_MT_PIE_template(Menu):
         pie.operator("ook.addobjasmloentity", text="Add Objects To Room", icon='OBJECT_DATA')
         pie.operator("ook.applyselectedflagpreset", text="Apply Flag Preset", icon='ALIGN_TOP')
         pie.operator("ook.drawable", text="Create Drawable", icon= 'CUBE')
+        pie.operator("ook.findmissingtextures", text="Find Missing Textures", icon= 'MATERIAL')
     
 
 class PieConvertToDrawable(Operator):
@@ -124,6 +132,20 @@ class PieApplySelectedFlagPreset(Operator):
         return {"FINISHED"}
 
 
+
+class PieFindMissingTextures(Operator, ImportHelper):
+    bl_idname ="ook.findmissingtextures"
+    bl_label = "Find Missing Textures"
+
+    # ImportHelper mixin class uses this
+    filename_ext = ".dds"
+
+
+    def execute(self, context):
+        return find_missing_files(self.filepath)
+
+
+
 addon_keymaps = []
 
 
@@ -135,7 +157,7 @@ def register():
     bpy.utils.register_class(PieAutoConvertMaterial)
     bpy.utils.register_class(PieAddObjAsMloentity)
     bpy.utils.register_class(PieApplySelectedFlagPreset)
-
+    bpy.utils.register_class(PieFindMissingTextures)
 
 # Assigns default keybinding
     wm = bpy.context.window_manager
@@ -155,13 +177,16 @@ def unregister():
     for km,kmi in addon_keymaps:
         km.keymap_items.remove(kmi)
     addon_keymaps.clear()
+    
 
 
+    bpy.utils.unregister_class(PieFindMissingTextures)
     bpy.utils.unregister_class(PieApplySelectedFlagPreset)
     bpy.utils.unregister_class(PieAddObjAsMloentity)
     bpy.utils.unregister_class(PieAutoConvertMaterial)
     bpy.utils.unregister_class(PieConvertToDrawable)
     bpy.utils.unregister_class(VIEW3D_MT_PIE_template)
+
 
 
 if __name__ == "__main__":
