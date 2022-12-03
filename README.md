@@ -1,3 +1,6 @@
+OUTDATED!!! -Merged into sollumz already
+
+
 # SollumzPieMenu
 Pie Menu for sollumz blender add-on
 
